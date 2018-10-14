@@ -1,0 +1,43 @@
+version: '3.2'
+services:
+    blackbox_exporter:
+        build: ./blackbox_exporter
+        container_name: 'blackbox_exporter'
+        ports:
+            - '9115:9115'
+        volumes:
+            - type: bind
+              source: ./blackbox_exporter/blackbox.yml
+              target: /etc/blackbox_exporter/blackbox.yml
+        networks:
+            - monitor_network
+
+    prometheus:
+        build: ./prometheus
+        container_name: 'prometheus'
+        ports:
+            - '9090:9090'
+        volumes:
+            - type: bind
+              source: ./prometheus/prometheus.yml
+              target: /etc/prometheus/prometheus.yml
+            - type: bind
+              source: ./prometheus/data/
+              target: /data/
+        networks:
+            - monitor_network
+
+    alertmanager:
+        build: ./alertmanager
+        container_name: 'alertmanager'
+        ports:
+            - '9093:9093'
+        volumes:
+            - type: bind
+              source: ./alertmanager/alertmanager.yml
+              target: /etc/alertmanager/alertmanager.yml
+        networks:
+            - monitor_network
+
+networks:
+    monitor_network:
