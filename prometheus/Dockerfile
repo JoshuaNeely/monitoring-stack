@@ -6,4 +6,5 @@ COPY            alert-rules.yml /etc/prometheus/alert-rules.yml
 
 EXPOSE      9090
 ENTRYPOINT  [ "/bin/prometheus" ]
-CMD         [ "--config.file=/etc/prometheus/prometheus.yml" ]
+CMD         [ "--config.file=/etc/prometheus/prometheus.yml", \
+              "--web.enable-lifecycle" ]
