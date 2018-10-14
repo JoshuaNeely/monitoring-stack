@@ -18,6 +18,3 @@ up:
 
 down:
 	docker-compose down
-
-sighup: 
-	@docker-compose kill -s SIGHUP
